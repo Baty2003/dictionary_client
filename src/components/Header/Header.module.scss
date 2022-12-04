@@ -1,0 +1,52 @@
+.header{
+	height: 135px;
+	background: transparent no-repeat;
+	background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(./img/background_header.jpg);
+	background-position: 5% 60%;
+	background-size: cover;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.title{
+	display: block;
+	color: white;
+	font-size: 60px;
+	text-align: center;
+	grid-column: 2;
+	line-height: 60px;
+	text-transform:uppercase;
+}
+
+.nav-header{
+	width: 100%;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 1fr 1fr;
+	align-items: center;
+}
+
+
+@media (max-width:450px) {
+	.header{
+		height: 200px;
+	}
+	.title{
+		margin: 0;
+		padding: 0;
+	}
+	.nav-header{
+		display: flex;
+		flex-direction: column;
+	}
+	.container-link{
+		width: 100%;
+		grid-column: 1;
+		grid-row: 2;
+		text-align: center;
+	}
+
+}
+
+
+

@@ -1,0 +1,47 @@
+@import '../../colors.scss';
+
+.name-dictionary a {
+	font-family: "Zen Dots", cursive;
+	font-size: 16px;
+}
+
+.pop {
+	cursor: pointer;
+	color: $accent-color;
+}
+
+.label {
+	width: 100%;
+}
+
+.form {
+	display: grid;
+	padding: 4px 0;
+	grid-template-columns: 37.5% 37.7% 25% 1fr;
+}
+
+.input {
+	border: 1px solid $accent-color;
+	outline: none;
+	transition: 0.3s;
+	font-size: 18px;
+	display: block;
+	width: 100%;
+
+	&:hover {
+		border: 1px solid $second-color;
+	}
+
+	&:active {
+		border: 1px solid red;
+	}
+
+	&:focus {
+		border: 1px solid rgb(0, 247, 255);
+	}
+
+}
+
+.td {
+	word-break: break-all;
+}

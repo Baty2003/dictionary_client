@@ -1,0 +1,61 @@
+@import '../../colors.scss';
+
+.form {
+	padding: 15px;
+	margin: 0;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+}
+
+.label {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	margin-right: 3px;
+}
+
+.input {
+	border: 1px solid $accent-color;
+	outline: none;
+	transition: 0.3s;
+	font-size: 18px;
+
+	&:hover {
+		border: 1px solid $second-color;
+	}
+
+	&:active {
+		border: 1px solid red;
+	}
+
+	&:focus {
+		border: 1px solid rgb(0, 247, 255);
+	}
+}
+
+.button {
+	border-radius: 2px;
+	background: $accent-color;
+	color: white;
+	padding: 5px;
+	border: 1px solid $second-color;
+	transition: 0.3s;
+
+	&:hover {
+		background-color: $second-color;
+		border-color: $accent-color;
+	}
+
+	&:active {
+		filter: invert(1);
+	}
+
+	&:focus {
+		outline: 1px solid black;
+	}
+
+	&-cancel {
+		background: red;
+	}
+}

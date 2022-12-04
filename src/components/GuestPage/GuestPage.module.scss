@@ -1,0 +1,59 @@
+@import '../../colors.scss';
+
+.section{
+	font-family: 'Zen Dots', cursive;
+}
+.title{
+	text-align: center;
+	
+}
+
+.container-invite{
+	text-align: center;
+	margin-top: 30px;
+}
+
+.invite{
+	display: inline-block;
+	text-decoration: none;
+	color: $primary-text;
+	font-size: 24px;
+	transition: 0.3s;
+	&:hover{
+		color: $accent-color;
+	}
+	&:focus{
+		color: $accent-color;
+		transform: scale(0.95)
+	}
+	&:active{
+		color: red;
+		transform: scale(0.90);
+	}
+
+}
+
+.animation-logo{
+	margin-top: 30px;
+	text-align: center;
+	position: relative;
+	left: 16px;
+}
+
+.invite-exclamation{
+	font-size: 30px;
+	animation-name: exclamation;
+	animation-duration: 3s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: alternate-reverse;
+}
+
+@keyframes exclamation {
+	from{
+		color: #012169;
+	}
+	to{
+		color: #bf0a30;
+	}
+}

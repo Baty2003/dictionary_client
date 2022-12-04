@@ -1,0 +1,39 @@
+@import '../../colors.scss';
+
+.name-dictionary a {
+	font-family: "Zen Dots", cursive;
+	font-size: 16px;
+}
+
+.pop {
+	cursor: pointer;
+	color: $accent-color;
+}
+
+
+.form{
+	padding: 4px;
+}
+.label{
+}
+
+.input {
+	border: 1px solid $accent-color;
+	outline: none;
+	transition: 0.3s;
+	font-size: 18px;
+	display: block;
+	width: 100%;
+
+	&:hover {
+		border: 1px solid $second-color;
+	}
+
+	&:active {
+		border: 1px solid red;
+	}
+
+	&:focus {
+		border: 1px solid rgb(0, 247, 255);
+	}
+}

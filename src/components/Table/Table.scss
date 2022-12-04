@@ -1,0 +1,53 @@
+.table {
+	border-collapse: collapse;
+	margin: auto;
+	width: 100%;
+
+	& tr {
+		&:nth-child(2) td {
+			border-bottom: none;
+		}
+	}
+
+	& th {
+		border: 1px solid black;
+	}
+
+	& th,
+	td {
+		font-size: 20px;
+		line-height: 26px;
+	}
+
+	& td {
+		border-bottom: 1px solid black;
+		border-right: 1px solid black;
+		text-align: center;
+
+		&:last-child {
+			border-right: none;
+		}
+
+		// border-left: 1px solid black;
+	}
+
+	& legend {
+		font-size: 26px;
+	}
+
+	&__link-add {
+		display: inline-block;
+		padding: 5px;
+		font-size: 16px;
+		margin-bottom: 15px;
+	}
+
+	&__container-form {
+		text-align: center;
+	}
+}
+
+.title-table {
+	font-family: "Zen Dots", cursive;
+	text-align: center;
+}

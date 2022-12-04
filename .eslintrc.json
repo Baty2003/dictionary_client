@@ -22,6 +22,7 @@
   },
   "plugins": ["react", "prettier", "import"],
   "rules": {
+    "no-unused-vars": "warn",
     "no-console": "warn",
     "indent": ["error", 2],
     "prettier/prettier": "error",

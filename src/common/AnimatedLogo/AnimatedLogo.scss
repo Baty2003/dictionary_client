@@ -1,0 +1,50 @@
+// .anim-logo .cls-5 cls-4{
+// 	fill: black;
+// }
+
+// blue #012169  red #bf0a30
+
+.anim-logo, .cls-5, .cls-4{
+	animation-duration: 3s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: alternate-reverse;
+}
+
+.anim-logo{
+	animation-name: logo-anim;
+}
+
+.cls-5{
+	animation-name: english;
+}
+.cls-4{
+	animation-name: america;
+}
+
+@keyframes english {
+	from {
+	}
+  
+	to {
+		fill: #012169;
+	}
+  }
+
+  @keyframes america {
+	from {
+	}
+  
+	to {
+		fill: #bf0a30;
+	}
+  }
+
+@keyframes logo-anim {
+	from {
+	}
+  
+	to {
+		transform: rotate(10deg);
+	}
+  }

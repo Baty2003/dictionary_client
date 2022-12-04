@@ -1,0 +1,29 @@
+@import '../../colors.scss';
+
+.link{
+	font-family: 'Zen Dots', cursive;
+	display: inline-block;
+	padding: 20px 35px;
+	border: 1px solid $accent-color;
+	text-transform: uppercase;
+	color: $primary-text;
+	transition: 0.3s;
+
+	&:hover{
+		opacity: 0.8;
+		border-color: $second-color;
+	}
+
+	&:active{
+		opacity: 0.8;
+		border-color: $second-color;
+		transform: scale(0.95);
+		filter: invert(1);
+	}
+}
+
+.primary{
+	background: $accent-color;
+	color:white;
+}
+
