@@ -2,7 +2,7 @@
 
 import { combineReducers } from 'redux';
 
-import { SET_IS_DICTIONARIES, SET_IS_FETCHING, SET_IS_WORDS, SET_USER } from './actionsNames';
+import { EXIT, SET_IS_DICTIONARIES, SET_IS_FETCHING, SET_IS_WORDS, SET_USER } from './actionsNames';
 
 const initialStateUser = {
   name: '',
@@ -14,6 +14,8 @@ const userReducer = (state = initialStateUser, action) => {
   switch (action.type) {
     case SET_USER:
       return { ...state, name: action.name, email: action.email, token: action.token };
+    case EXIT:
+      return initialStateUser;
     default:
       return state;
   }

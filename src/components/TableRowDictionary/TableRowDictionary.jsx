@@ -31,11 +31,13 @@ const TableRowDictionary = ({ id, create, name, className, editItem, deleteItem 
         .then(() => {
           setEdit(false);
         })
-        .catch((errors) =>
+        .catch((errors) => {
+          console.log(errors);
+
           errors.errors
             ? parseErrorForHookForms(errors.errors, setError)
-            : setError('general', { type: 'general', message: errors?.message }),
-        );
+            : setError('general', { type: 'general', message: errors?.message });
+        });
     } else {
       setEdit(false);
     }
@@ -47,9 +49,7 @@ const TableRowDictionary = ({ id, create, name, className, editItem, deleteItem 
   });
 
   useEffect(() => {
-    if (!edit) {
-      reset();
-    } else {
+    if (edit) {
       setFocus('name');
     }
   }, [edit]);

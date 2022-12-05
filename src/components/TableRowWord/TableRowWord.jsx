@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import format from 'date-fns/format';
-import { Link } from 'react-router-dom';
 import { Popconfirm } from 'antd';
 import { useForm } from 'react-hook-form';
-import classNames from 'classnames';
 
 import { useDoubleTouch } from '../../utils/hooks.js';
-import { validateNameHook, validateWordsFieldHook } from '../../utils/validateRules.js';
+import { validateWordsFieldHook } from '../../utils/validateRules.js';
 import { parseErrorForHookForms } from '../../utils/functionHelp.js';
 
 import tableRowStyle from './TableRowWord.module.scss';
 
 const TableRowWord = ({ id, create, english, russian, transcription, editItem, deleteItem }) => {
-  console.log(english);
-
-  const [edit, setEdit] = useState(true);
+  const [edit, setEdit] = useState(false);
   const {
     register,
     formState: { errors },
@@ -28,16 +24,16 @@ const TableRowWord = ({ id, create, english, russian, transcription, editItem, d
   const doubleTouchDetect = useDoubleTouch();
 
   const submitFunc = ({ english: englishForm, russian: russianForm, transcription: transcriptionForm }) => {
-    if (english !== englishForm && russian !== russianForm && transcription !== transcriptionForm) {
+    if (english !== englishForm || russian !== russianForm || transcription !== transcriptionForm) {
       editItem(id, englishForm, russianForm, transcriptionForm)
         .then(() => {
           setEdit(false);
         })
-        .catch((errors) =>
+        .catch((errors) => {
           errors.errors
             ? parseErrorForHookForms(errors.errors, setError)
-            : setError('general', { type: 'general', message: errors?.message }),
-        );
+            : setError('general', { type: 'general', message: errors?.message });
+        });
     } else {
       setEdit(false);
     }
@@ -113,7 +109,7 @@ const TableRowWord = ({ id, create, english, russian, transcription, editItem, d
   return (
     <>
       <tr data-id={id} onDoubleClick={() => setEdit(true)} onTouchStart={() => doubleTouchDetect(() => setEdit(true))}>
-        <td className={classTd}>Pneumonoultramicroscopicsilicovolcanokoniosis</td>
+        <td className={classTd}>{english}</td>
         <td className={classTd}>{russian}</td>
         <td className={classTd}>{transcription}</td>
         <td>{format(new Date(create), 'MM/dd/yy')}</td>
@@ -124,7 +120,6 @@ const TableRowWord = ({ id, create, english, russian, transcription, editItem, d
             </Popconfirm>
           }
         </td>
-        <td></td>
       </tr>
     </>
   );

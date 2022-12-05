@@ -13,10 +13,11 @@ body {
 	max-width: 1020px;
 	margin: auto;
 	padding: 10px;
+	transition: 0.3s;
 }
 
 .main {
-	min-height: 80vh;
+	min-height: 100vh;
 	margin-top: 10px;
 	margin-bottom: 40px;
 }
@@ -26,6 +27,9 @@ a {
 	color: $primary-text;
 }
 
+.opacity {
+	opacity: 0.1;
+}
 
 .pages {
 	position: relative;

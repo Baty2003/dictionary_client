@@ -1,5 +1,3 @@
-import { id } from 'date-fns/locale';
-
 const baseUrl = 'https://u140505new.test-handyhost.ru/api';
 const baseHeaders = {
   Accept: 'application/json',
@@ -28,6 +26,8 @@ const checkAndReturnResponse = async (response, ruleConvertData) => {
   let data = await response.json();
   if (response.ok) {
     if (ruleConvertData !== undefined) {
+      console.log(data);
+
       data = data.map(ruleConvertData);
     }
     return data;
@@ -160,4 +160,56 @@ export const getWordsByToken = async (id, token) => {
   });
 
   return checkAndReturnResponse(response, rulesForConvertData.word);
+};
+
+export const addWord = async (dictionary_id, english, russian, transcription, token) => {
+  const body = {
+    dictionary_id,
+    english,
+    russian,
+    transcription,
+    token,
+  };
+  const response = await fetch(`${baseUrl}/word`, {
+    method: 'POST',
+    headers: {
+      ...baseHeaders,
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(body),
+  });
+
+  return checkAndReturnResponse(response);
+};
+
+export const editWord = async (id, english, russian, transcription, token) => {
+  const body = {
+    id,
+    english,
+    russian,
+    transcription,
+    token,
+  };
+  const response = await fetch(`${baseUrl}/word`, {
+    method: 'PUT',
+    headers: {
+      ...baseHeaders,
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(body),
+  });
+
+  return checkAndReturnResponse(response);
+};
+
+export const deleteWord = async (id, token) => {
+  const response = await fetch(`${baseUrl}/word/${id}`, {
+    method: 'DELETE',
+    headers: {
+      ...baseHeaders,
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return checkAndReturnResponse(response);
 };

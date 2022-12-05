@@ -5,18 +5,32 @@ import { useParams } from 'react-router-dom';
 
 import { Table } from '../../components/Table';
 import TableRowWord from '../../components/TableRowWord/TableRowWord';
-import { getWords } from '../../redux/actions';
+import { createAndUpdateWord, deleteAndUpdateWord, editAndUpdateWord, getWords } from '../../redux/actions';
 import { columnsWordsForTable } from '../../utils/namesColumns';
 const GetWord = () => {
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { id: idDict } = useParams();
   const token = useSelector((state) => state.user.token);
   const items = useSelector((state) => state.data.words);
 
   useEffect(() => {
-    if (token) dispatch(getWords(id, token));
+    if (token) dispatch(getWords(idDict, token));
   }, [token]);
 
-  return <Table items={items} namesTitlesCells={columnsWordsForTable} ComponentTr={TableRowWord} type="word" />;
+  return (
+    <Table
+      items={items}
+      namesTitlesCells={columnsWordsForTable}
+      ComponentTr={TableRowWord}
+      type="word"
+      editItem={(id, english, russian, transcription) =>
+        dispatch(editAndUpdateWord(id, english, russian, transcription, idDict, token))
+      }
+      addItem={(english, russian, transcription) =>
+        dispatch(createAndUpdateWord(english, russian, transcription, idDict, token))
+      }
+      deleteItem={(idWord) => dispatch(deleteAndUpdateWord(idWord, idDict, token))}
+    />
+  );
 };
 export default GetWord;

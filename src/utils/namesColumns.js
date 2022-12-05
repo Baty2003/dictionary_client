@@ -30,6 +30,6 @@ export const columnsWordsForTable = [
   },
   {
     name: 'Action',
-    width: '10%',
+    width: '8%',
   },
 ];

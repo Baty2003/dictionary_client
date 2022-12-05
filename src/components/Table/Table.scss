@@ -5,12 +5,12 @@
 
 	& tr {
 		&:nth-child(2) td {
-			border-bottom: none;
+			border: none;
 		}
 	}
 
 	& th {
-		border: 1px solid black;
+		border-bottom: 1px solid black;
 	}
 
 	& th,
@@ -20,15 +20,13 @@
 	}
 
 	& td {
-		border-bottom: 1px solid black;
-		border-right: 1px solid black;
-		text-align: center;
+		border: 1px solid black;
+		border-top: none;
+		padding-left: 10px;
 
 		&:last-child {
 			border-right: none;
 		}
-
-		// border-left: 1px solid black;
 	}
 
 	& legend {
@@ -50,4 +48,8 @@
 .title-table {
 	font-family: "Zen Dots", cursive;
 	text-align: center;
+}
+
+.opacity {
+	opacity: 0.1;
 }
