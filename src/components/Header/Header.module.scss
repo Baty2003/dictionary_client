@@ -1,3 +1,5 @@
+@import '../../colors.scss';
+
 .header {
 	max-height: 200px;
 	padding: 10px;
@@ -25,24 +27,26 @@
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) 1fr 1fr;
 	align-items: center;
+	justify-content: center;
 
 	&-loggin {
-		grid-template-columns: 1fr 0;
-		grid-template-rows: 1fr 1fr;
+		grid-template-columns: auto 1fr auto;
+		grid-template-rows: 1fr 30px 1fr;
 
 		& .title {
-			grid-column: auto;
+			grid-column: 2;
 		}
 
 		& .container-link {
-			grid-row: 2;
+			grid-column: 2;
+			grid-row: 3;
 			margin: auto;
 		}
 
 		& .container-link>a {
 			margin-right: 10px;
 			margin-top: 5px;
-			padding:10px;
+			padding: 10px;
 			text-align: center;
 
 			&:last-child {
@@ -50,6 +54,25 @@
 			}
 		}
 	}
+}
+
+.text-profile {
+	color: white;
+	justify-self: center;
+	border: 1px solid $accent-color;
+	padding: 5px;
+	margin: 0;
+	max-width: 190px;
+	grid-row: 2;
+	grid-column: 2;
+	cursor: pointer;
+}
+
+.username-text {
+	color: white;
+	background: $second-color;
+	text-transform: uppercase;
+	padding: 5px;
 }
 
 
@@ -61,6 +84,7 @@
 	.title {
 		margin: 0;
 		padding: 0;
+		font-size: 42px;
 	}
 
 	.nav-header {

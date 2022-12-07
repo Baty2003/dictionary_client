@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import format from 'date-fns/format';
-import { Popconfirm } from 'antd';
+import { Button, Popconfirm } from 'antd';
 import { useForm } from 'react-hook-form';
 
 import { useDoubleTouch } from '../../utils/hooks.js';
 import { validateWordsFieldHook } from '../../utils/validateRules.js';
-import { parseErrorForHookForms } from '../../utils/functionHelp.js';
+import { getTranscriptionByEnglishWord, parseErrorForHookForms } from '../../utils/functionHelp.js';
 
 import tableRowStyle from './TableRowWord.module.scss';
 
@@ -17,6 +17,8 @@ const TableRowWord = ({ id, create, english, russian, transcription, editItem, d
     setError,
     handleSubmit,
     reset,
+    getValues,
+    setValue,
     setFocus,
   } = useForm({ mode: 'onBlur' });
 
@@ -62,7 +64,7 @@ const TableRowWord = ({ id, create, english, russian, transcription, editItem, d
           if (event.key === 'Escape') setEdit(false);
         }}
       >
-        <td colSpan={3} className={tableRowStyle['name-dictionary']}>
+        <td colSpan={4} className={tableRowStyle['name-dictionary']}>
           <form className={tableRowStyle['form']} onSubmit={handleSubmit(submitFunc)}>
             <label htmlFor="name" className={tableRowStyle['label']}>
               <input
@@ -84,24 +86,32 @@ const TableRowWord = ({ id, create, english, russian, transcription, editItem, d
               {errors.russian && <span>{errors?.russian?.message || 'Error'}</span>}
               {errors.general && <span>{errors?.general?.message || 'Error general'}</span>}
             </label>
-            <label style={{ display: 'flex' }} htmlFor="name" className={tableRowStyle['label']}>
+            <label htmlFor="name" className={tableRowStyle['label']}>
               <input
                 type="text"
                 name="transcription"
                 className={tableRowStyle['input']}
-                {...register('transcription', { ...validateWordsFieldHook, value: transcription })}
+                {...register('transcription', { required: false, value: transcription })}
               />
               {errors.transcription && <span>{errors?.transcription?.message || 'Error'}</span>}
               {errors.general && <span>{errors?.general?.message || 'Error general'}</span>}
             </label>
-            <label htmlFor="">
-              <button type="submit" className={tableRowStyle['submit-button']}>
-                submit
-              </button>
+            <label className={tableRowStyle['buttons-label']}>
+              <Button
+                type="button"
+                className={tableRowStyle['submit-button']}
+                onClick={() =>
+                  getTranscriptionByEnglishWord(getValues('english')).then((data) => setValue('transcription', data))
+                }
+              >
+                Trans
+              </Button>
+              <Button htmlType="submit" type="primary" className={tableRowStyle['submit-button']}>
+                Submit
+              </Button>
             </label>
           </form>
         </td>
-        <td></td>
         <td></td>
       </tr>
     );

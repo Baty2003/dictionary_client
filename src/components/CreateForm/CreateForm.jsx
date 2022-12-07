@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { parseErrorForHookForms } from '../../utils/functionHelp';
-import { validateNameHook } from '../../utils/validateRules';
+import { getTranscriptionByEnglishWord, parseErrorForHookForms } from '../../utils/functionHelp';
+import { validateNameHook, validateTranscriptionFieldHook, validateWordsFieldHook } from '../../utils/validateRules';
 import { LinkPrimary } from '../LinkPrimary';
 
 import formStyle from './CreateForm.module.scss';
@@ -12,6 +12,9 @@ const CreateForm = ({ submitFunc, type, hideFunc, showFunc, show }) => {
     register,
     formState: { errors },
     setError,
+    setValue,
+    getValues,
+    reset,
     handleSubmit,
   } = useForm({ mode: 'onBlur' });
 
@@ -29,6 +32,10 @@ const CreateForm = ({ submitFunc, type, hideFunc, showFunc, show }) => {
       });
   };
 
+  useEffect(() => {
+    if (!show) reset();
+  }, [show]);
+
   if (!show) {
     return <LinkPrimary text={'Add new item'} className="table__link-add" primary onClick={showFunc} href="#" />;
   } else if (type === 'word')
@@ -38,21 +45,34 @@ const CreateForm = ({ submitFunc, type, hideFunc, showFunc, show }) => {
           <span className={formStyle['name-label']}>English</span>
           {errors?.general && <span className="ant-error">{errors?.general?.message || 'Error General'}</span>}
           {errors?.english && <span className="ant-error">{errors?.english?.message || 'Error'}</span>}
-          <input type="text" className={formStyle['input']} {...register('english', validateNameHook)} />
+          <input type="text" className={formStyle['input']} {...register('english', validateWordsFieldHook)} />
         </label>
         <label htmlFor="name" className={formStyle['label']}>
           <span className={formStyle['name-label']}>Russian</span>
           {errors?.general && <span className="ant-error">{errors?.general?.message || 'Error General'}</span>}
           {errors?.russian && <span className="ant-error">{errors?.russian?.message || 'Error'}</span>}
-          <input type="text" className={formStyle['input']} {...register('russian', validateNameHook)} />
+          <input type="text" className={formStyle['input']} {...register('russian', validateWordsFieldHook)} />
         </label>
         <label htmlFor="name" className={formStyle['label']}>
           <span className={formStyle['name-label']}>Transcription</span>
           {errors?.general && <span className="ant-error">{errors?.general?.message || 'Error General'}</span>}
           {errors?.transcription && <span className="ant-error">{errors?.transcription?.message || 'Error'}</span>}
-          <input type="text" className={formStyle['input']} {...register('transcription', validateNameHook)} />
+          <input
+            type="text"
+            className={formStyle['input']}
+            {...register('transcription', validateTranscriptionFieldHook)}
+          />
         </label>
         <label htmlFor="">
+          <button
+            type="button"
+            className={formStyle['button']}
+            onClick={() => {
+              getTranscriptionByEnglishWord(getValues('english')).then((data) => setValue('transcription', data));
+            }}
+          >
+            Add Transcription
+          </button>
           <button type="submit" className={formStyle['button']}>
             Add Word
           </button>

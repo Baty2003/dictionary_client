@@ -11,7 +11,7 @@ import { parseErrorForHookForms } from '../../utils/functionHelp.js';
 
 import tableRowStyle from './TableRowDictionary.module.scss';
 
-const TableRowDictionary = ({ id, create, name, className, editItem, deleteItem }) => {
+const TableRowDictionary = ({ id, create, name, count, className, editItem, deleteItem }) => {
   const [edit, setEdit] = useState(false);
   const {
     register,
@@ -51,6 +51,8 @@ const TableRowDictionary = ({ id, create, name, className, editItem, deleteItem 
   useEffect(() => {
     if (edit) {
       setFocus('name');
+    } else {
+      reset();
     }
   }, [edit]);
 
@@ -88,6 +90,7 @@ const TableRowDictionary = ({ id, create, name, className, editItem, deleteItem 
     <>
       <tr data-id={id} onDoubleClick={() => setEdit(true)} onTouchStart={() => doubleTouchDetect(() => setEdit(true))}>
         <td className={tableRowStyle['name-dictionary']}>{<Link to={`/dictionary/${id}`}>{name}</Link>}</td>
+        <td>{count}</td>
         <td>{format(new Date(create), 'MM/dd/yy')}</td>
         <td>
           {

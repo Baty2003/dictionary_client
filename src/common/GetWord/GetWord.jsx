@@ -12,6 +12,7 @@ const GetWord = () => {
   const { id: idDict } = useParams();
   const token = useSelector((state) => state.user.token);
   const items = useSelector((state) => state.data.words);
+  const dictionaryName = useSelector((state) => state.data?.dictionaries).find((item) => item.id === +idDict)?.name;
 
   useEffect(() => {
     if (token) dispatch(getWords(idDict, token));
@@ -20,6 +21,7 @@ const GetWord = () => {
   return (
     <Table
       items={items}
+      title={`Dictionary is ${dictionaryName || ''}`}
       namesTitlesCells={columnsWordsForTable}
       ComponentTr={TableRowWord}
       type="word"
@@ -30,6 +32,7 @@ const GetWord = () => {
         dispatch(createAndUpdateWord(english, russian, transcription, idDict, token))
       }
       deleteItem={(idWord) => dispatch(deleteAndUpdateWord(idWord, idDict, token))}
+      withCreateItem
     />
   );
 };

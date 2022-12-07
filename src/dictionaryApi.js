@@ -6,18 +6,30 @@ const baseHeaders = {
 const rulesForConvertData = {
   dictionary: (dictionary) => {
     return {
-      id: dictionary.id,
+      id: +dictionary.id,
       name: dictionary.name,
+      count: +dictionary.count,
       create: dictionary.created_at,
+      words: dictionary.words,
     };
   },
   word: (word) => {
     return {
-      id: word.id,
+      id: +word.id,
       english: word.english,
       russian: word.russian,
       transcription: word.transcription,
       create: word.created_at,
+    };
+  },
+  resultTesting: (test) => {
+    return {
+      nameDict: test.name_dictionary,
+      countWords: test.count_words,
+      countTrue: test.count_true,
+      countFalse: test.count_false,
+      testingTimeSeconds: test.time_testing_seconds,
+      create: test.created_at,
     };
   },
 };
@@ -26,8 +38,6 @@ const checkAndReturnResponse = async (response, ruleConvertData) => {
   let data = await response.json();
   if (response.ok) {
     if (ruleConvertData !== undefined) {
-      console.log(data);
-
       data = data.map(ruleConvertData);
     }
     return data;
@@ -57,6 +67,24 @@ export const loginUser = async (email, password) => {
     method: 'POST',
     headers: {
       ...baseHeaders,
+    },
+    body: JSON.stringify(body),
+  });
+
+  return checkAndReturnResponse(response);
+};
+
+export const editUser = async (name, email, password, token) => {
+  const body = {
+    name,
+    email,
+    password,
+  };
+  const response = await fetch(`${baseUrl}/user`, {
+    method: 'PUT',
+    headers: {
+      ...baseHeaders,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   });
@@ -94,7 +122,7 @@ export const registerUser = async (name, email, password) => {
 };
 
 export const getDictionariesByToken = async (token) => {
-  const response = await fetch(`${baseUrl}/dictionary`, {
+  const response = await fetch(`${baseUrl}/dictionary/count`, {
     method: 'GET',
     headers: {
       ...baseHeaders,
@@ -209,6 +237,75 @@ export const deleteWord = async (id, token) => {
       ...baseHeaders,
       Authorization: `Bearer ${token}`,
     },
+  });
+
+  return checkAndReturnResponse(response);
+};
+
+export const getErrorWord = async (token) => {
+  const response = await fetch(`${baseUrl}/error_word`, {
+    method: 'GET',
+    headers: {
+      ...baseHeaders,
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return checkAndReturnResponse(response, rulesForConvertData.word);
+};
+
+export const addErrorWord = async (idWord, token) => {
+  const response = await fetch(`${baseUrl}/error_word`, {
+    method: 'POST',
+    headers: {
+      ...baseHeaders,
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ word_id: idWord }),
+  });
+
+  return checkAndReturnResponse(response);
+};
+
+export const deleteErrorWord = async (idWord, token) => {
+  const response = await fetch(`${baseUrl}/error_word/${idWord}`, {
+    method: 'DELETE',
+    headers: {
+      ...baseHeaders,
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return checkAndReturnResponse(response);
+};
+
+export const getHistoryResults = async (token) => {
+  const response = await fetch(`${baseUrl}/result_testing`, {
+    method: 'GET',
+    headers: {
+      ...baseHeaders,
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return checkAndReturnResponse(response, rulesForConvertData.resultTesting);
+};
+
+export const addResult = async (name_dictionary, count_words, count_true, count_false, time_testing_seconds, token) => {
+  const body = {
+    name_dictionary,
+    count_words,
+    count_true,
+    count_false,
+    time_testing_seconds,
+  };
+  const response = await fetch(`${baseUrl}/result_testing`, {
+    method: 'POST',
+    headers: {
+      ...baseHeaders,
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(body),
   });
 
   return checkAndReturnResponse(response);

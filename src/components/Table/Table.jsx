@@ -1,27 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import { tr } from 'date-fns/locale';
+import React, { useState } from 'react';
 
 import { Loader } from '../../common/Loader';
 import { useLoader } from '../../utils/hooks';
 import CreateForm from '../CreateForm/CreateForm';
-import { LinkPrimary } from '../LinkPrimary';
 import './Table.scss';
 
-const Table = ({ namesTitlesCells = [{}], items = [], title, ComponentTr, addItem, editItem, deleteItem, type }) => {
+const Table = ({
+  namesTitlesCells = [{}],
+  items = [],
+  title,
+  ComponentTr,
+  addItem,
+  editItem,
+  deleteItem,
+  type,
+  withCreateItem,
+  children,
+}) => {
   const [showForm, setShowForm] = useState(false);
   return (
     <>
       {useLoader() && <Loader />}
-      <section className={`pages ${useLoader() ? 'opacity' : null}`}>
-        <h2 className="title-table">{title}</h2>
+      <section className={`pages ${useLoader() ? 'opacity' : ''}`}>
+        <h2 className="title title-table">{title}</h2>
+
         <div className="table__container-form">
-          <CreateForm
-            type={type}
-            submitFunc={addItem}
-            hideFunc={() => setShowForm(false)}
-            showFunc={() => setShowForm(true)}
-            show={showForm}
-          />
+          {withCreateItem && (
+            <CreateForm
+              type={type}
+              submitFunc={addItem}
+              hideFunc={() => setShowForm(false)}
+              showFunc={() => setShowForm(true)}
+              show={showForm}
+            />
+          )}
+          {children}
         </div>
+
         <table className="table">
           <tbody>
             <tr>
@@ -36,9 +52,17 @@ const Table = ({ namesTitlesCells = [{}], items = [], title, ComponentTr, addIte
                 <td key={cell.name} width={cell?.width && cell.width}></td>
               ))}
             </tr>
-            {items.map((item, index) => (
-              <ComponentTr key={index} {...item} editItem={editItem} deleteItem={deleteItem} />
-            ))}
+            {items.length ? (
+              items.map((item, index) => (
+                <ComponentTr key={index} {...item} editItem={editItem} deleteItem={deleteItem} />
+              ))
+            ) : (
+              <tr>
+                <td colSpan={namesTitlesCells.length} style={{ textAlign: 'center' }}>
+                  NOT DATA
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </section>

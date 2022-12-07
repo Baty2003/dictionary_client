@@ -24,9 +24,6 @@
 		border-top: none;
 		padding-left: 10px;
 
-		&:last-child {
-			border-right: none;
-		}
 	}
 
 	& legend {
@@ -42,13 +39,10 @@
 
 	&__container-form {
 		text-align: center;
+		margin: 10px 0;
 	}
 }
 
-.title-table {
-	font-family: "Zen Dots", cursive;
-	text-align: center;
-}
 
 .opacity {
 	opacity: 0.1;

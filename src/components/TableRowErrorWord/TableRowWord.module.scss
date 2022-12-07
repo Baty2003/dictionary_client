@@ -10,9 +10,16 @@
 	color: $accent-color;
 }
 
+.label {
+	width: 100%;
+	display: flex;
+	align-items: center;
+}
 
-.form{
-	padding: 4px;
+.form {
+	display: grid;
+	padding: 4px 0;
+	grid-template-columns: 37.5% 37.7% 25% 1fr;
 }
 
 .input {
@@ -34,4 +41,14 @@
 	&:focus {
 		border: 1px solid rgb(0, 247, 255);
 	}
+
+}
+
+.td {
+	word-break: break-all;
+}
+
+.submit-button {
+	padding: 5px;
+	font-family: 'Yanone Kaffeesatz', sans-serif;
 }

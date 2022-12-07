@@ -7,6 +7,8 @@ import {
   editDictionary,
   editWord,
   getDictionariesByToken,
+  getErrorWord,
+  getHistoryResults,
   getUserByToken,
   getWordsByToken,
   loginUser,
@@ -14,26 +16,34 @@ import {
 } from '../dictionaryApi';
 import { setCookie } from '../utils/functionHelp';
 
-import { EXIT, SET_IS_DICTIONARIES, SET_IS_FETCHING, SET_IS_WORDS, SET_USER } from './actionsNames';
+import { EXIT, SET_IS_DICTIONARIES, SET_IS_ERROR_WORDS, SET_IS_FETCHING, SET_IS_RESULTS, SET_IS_TESTING_DATA, SET_IS_WORDS, SET_USER } from './actionsNames';
 
 export const setIsFetching = (statusIsFetching) => {
   return { type: SET_IS_FETCHING, isFetching: statusIsFetching };
 };
-
 export const setUserData = (name, email, token) => {
   return { type: SET_USER, name, email, token };
 };
-
 export const exit = () => {
   return {type: EXIT}
 }
-
 export const setDictionaries = (dictionaries) => {
   return { type: SET_IS_DICTIONARIES, dictionaries };
 };
 export const setWords = (words) => {
   return { type: SET_IS_WORDS, words };
 };
+export const setTestingData = (dictionary, words, countVariants, lang) => {
+  return {type: SET_IS_TESTING_DATA, dictionary, words, countVariants, lang}
+}
+export const setErrorWords = (errorsWords) => {
+  return {type: SET_IS_ERROR_WORDS, errorsWords}
+}
+
+export const setResults = (results) => {
+  return {type: SET_IS_RESULTS, results}
+}
+
 
 // async
 export const loginUserAction = (email, password) => async (dispatch) => {
@@ -55,7 +65,8 @@ export const getDataUser = (token) => async (dispatch) => {
   try {
     const response = await getUserByToken(token);
     dispatch(setUserData(response.name, response.email, token));
-    dispatch(getDictionaries(token))
+    dispatch(getDictionariesAndErrorWords(token));
+    dispatch(getResults(token));
     dispatch(setIsFetching(false));
     return response;
   } catch (err) {
@@ -79,11 +90,26 @@ export const registerUser = (name, email, password) => async (dispatch) => {
   }
 };
 
-export const getDictionaries = (token) => async (dispatch) => {
+export const getResults = (token) => async (dispatch) => {
+  try { 
+    dispatch(setIsFetching(true));
+    const response = await getHistoryResults(token);
+    dispatch(setResults(response));
+    dispatch(setIsFetching(false));
+    return response
+  } catch(err){
+    dispatch(setIsFetching(false));
+    return Promise.reject(err);
+  }
+}
+
+export const getDictionariesAndErrorWords = (token) => async (dispatch) => {
   dispatch(setIsFetching(true));
   try {
-    const response = await getDictionariesByToken(token);
+    let response = await getDictionariesByToken(token);
     dispatch(setDictionaries(response));
+    response = await getErrorWord(token);
+    dispatch(setErrorWords(response));
     dispatch(setIsFetching(false));
     return response;
   } catch (err) {
@@ -99,7 +125,7 @@ export const excuteFuncAndUpdateDictionries =
       try{
         dispatch(setIsFetching(true));
         const response = await func(...args, token);
-        dispatch(getDictionaries(token));
+        dispatch(getDictionariesAndErrorWords(token));
         dispatch(setIsFetching(false));
         return response;
       } catch (error) {
@@ -128,6 +154,7 @@ export const getWords = (id, token) => async (dispatch) => {
   try {
     const response = await getWordsByToken(id, token);
     dispatch(setWords(response));
+    dispatch(getDictionariesAndErrorWords(token));
     dispatch(setIsFetching(false));
     return response;
   } catch (err) {
@@ -140,8 +167,6 @@ export const getWords = (id, token) => async (dispatch) => {
 export const excuteFuncAndUpdateWords =
   (func, token,idDict, ...args) =>
     async (dispatch) => {
-      console.log(args);
-      
       try{
         dispatch(setIsFetching(true));
         const response = await func(...args, token);
