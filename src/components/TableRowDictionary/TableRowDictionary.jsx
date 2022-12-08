@@ -32,8 +32,6 @@ const TableRowDictionary = ({ id, create, name, count, className, editItem, dele
           setEdit(false);
         })
         .catch((errors) => {
-          console.log(errors);
-
           errors.errors
             ? parseErrorForHookForms(errors.errors, setError)
             : setError('general', { type: 'general', message: errors?.message });

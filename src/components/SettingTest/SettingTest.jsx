@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Radio, Select, Slider } from 'antd';
-import { Option } from 'antd/lib/mentions';
-import { useHistory } from 'react-router-dom';
+import { Button, Form, Radio, Select, Slider } from 'antd';
 
 import { Loader } from '../../common/Loader';
 import { useLoader } from '../../utils/hooks';
-
-import settingTestStyle from './SettingTest.module.scss';
 
 const SettingTest = ({ items = [], workOnError, saveSettingFunc, isRussian }) => {
   const [countWords, setCountWords] = useState(4);
