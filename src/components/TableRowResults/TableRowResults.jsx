@@ -13,7 +13,7 @@ const TableRowResults = ({ nameDict, countWords, countTrue, countFalse, testingT
         <td className={classTd}>{countTrue}</td>
         <td className={classTd}>{countFalse}</td>
         <td className={classTd}>{testingTimeSeconds} seconds</td>
-        <td>{format(new Date(create), 'MM/dd/yy')}</td>
+        <td>{format(new Date(create), 'dd/MM/yy')}</td>
       </tr>
     </>
   );

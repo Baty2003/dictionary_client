@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import format from 'date-fns/format';
 import { Link } from 'react-router-dom';
-import { Popconfirm } from 'antd';
+import { Popconfirm, Button } from 'antd';
 import { useForm } from 'react-hook-form';
 import classNames from 'classnames';
 
@@ -67,7 +67,7 @@ const TableRowDictionary = ({ id, create, name, count, className, editItem, dele
           if (event.key === 'Escape') setEdit(false);
         }}
       >
-        <td className={tableRowStyle['name-dictionary']}>
+        <td className={tableRowStyle['name-dictionary']} colSpan={4}>
           <form className={tableRowStyle['form']} onSubmit={handleSubmit(submitFunc)}>
             <label htmlFor="name" className={tableRowStyle['label']}>
               <input
@@ -79,10 +79,11 @@ const TableRowDictionary = ({ id, create, name, count, className, editItem, dele
               {errors.name && <span>{errors?.name?.message || 'Error'}</span>}
               {errors.general && <span>{errors?.general?.message || 'Error general'}</span>}
             </label>
+            <Button style={{ flexGrow: '1' }} htmlType="submit" type="primary">
+              Submit
+            </Button>
           </form>
         </td>
-        <td></td>
-        <td></td>
       </tr>
     );
   }
@@ -91,7 +92,7 @@ const TableRowDictionary = ({ id, create, name, count, className, editItem, dele
       <tr data-id={id} onDoubleClick={() => setEdit(true)} onTouchStart={() => doubleTouchDetect(() => setEdit(true))}>
         <td className={tableRowStyle['name-dictionary']}>{<Link to={`/dictionary/${id}`}>{name}</Link>}</td>
         <td>{count}</td>
-        <td>{format(new Date(create), 'MM/dd/yy')}</td>
+        <td>{format(new Date(create), 'dd/MM/yy')}</td>
         <td>
           {
             <Popconfirm onConfirm={() => deleteItem(id)} title={'Delete this item?'} className={tableRowStyle['pop']}>

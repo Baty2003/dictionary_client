@@ -1,81 +1,81 @@
-export const columnsDictionariesForTable = [
+export const columnsDictionariesForTable = (isRussian) => [
   {
-    name: 'Name',
+    name: isRussian ? 'Имя' : 'Name',
   },
   {
-    name: 'Count Words',
+    name: isRussian ? 'Кол-во слов' : 'Count Words',
     width: '10%',
   },
   {
-    name: 'Create',
+    name: isRussian ? 'Создано' : 'Create',
     width: '10%',
   },
   {
-    name: 'action',
+    name: isRussian ? 'Действие' : 'action',
     width: '10%',
   },
 ];
 
-export const columnsWordsForTable = [
+export const columnsWordsForTable = (isRussian) => [
   {
-    name: 'English',
+    name: isRussian ? 'Английский' : 'English',
     width: '30%',
   },
   {
-    name: 'Russian',
+    name: isRussian ? 'Русский' : 'Russian',
     width: '30%',
   },
   {
-    name: 'Transcription',
+    name: isRussian ? 'Транскрипция' : 'Transcription',
   },
   {
-    name: 'create',
+    name: isRussian ? 'Создано' : 'create',
     width: '10%',
   },
   {
-    name: 'Action',
+    name: isRussian ? 'Действие' : 'Action',
     width: '8%',
   },
 ];
 
-export const columnsErrorWordsForTable = [
+export const columnsErrorWordsForTable = (isRussian) => [
   {
-    name: 'English',
+    name: isRussian ? 'Английский' : 'English',
     width: '30%',
   },
   {
-    name: 'Russian',
+    name: isRussian ? 'Русский' : 'Russian',
     width: '30%',
   },
   {
-    name: 'Transcription',
+    name: isRussian ? 'Транскрипцпия' : 'Transcription',
   },
   {
-    name: 'create',
+    name: isRussian ? 'Создано' : 'create',
     width: '10%',
   },
 ];
 
-export const columnsResultForTable = [
+export const columnsResultForTable = (isRussian) => [
   {
-    name: 'Dictionary name',
-    width: '40%',
+    name: isRussian ? 'Имя словаря' : 'Dictionary name',
+    width: '25%',
   },
   {
-    name: 'Count words',
+    name: isRussian ? 'Кол-во слов' : 'Count words',
   },
   {
-    name: 'True answer',
+    name: isRussian ? 'Правильный ответы' : 'True answer',
   },
   {
-    name: 'False answer',
+    name: isRussian ? 'Неправильные ответы' : 'False answer',
   },
   {
-    name: 'Time Testing',
+    name: isRussian ? 'Время тестирования' : 'Time Testing',
     width: '20%',
   },
   {
-    name: 'Date testing',
+    name: isRussian ? 'Дата тестирования' : 'Date testing',
     width: '10%',
   },
 ];

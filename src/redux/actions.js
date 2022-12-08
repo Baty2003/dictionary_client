@@ -16,7 +16,7 @@ import {
 } from '../dictionaryApi';
 import { setCookie } from '../utils/functionHelp';
 
-import { EXIT, SET_IS_DICTIONARIES, SET_IS_ERROR_WORDS, SET_IS_FETCHING, SET_IS_RESULTS, SET_IS_TESTING_DATA, SET_IS_WORDS, SET_USER } from './actionsNames';
+import { EXIT, SET_IS_DICTIONARIES, SET_IS_ERROR_WORDS, SET_IS_FETCHING, SET_IS_LANG, SET_IS_RESULTS, SET_IS_TESTING_DATA, SET_IS_WORDS, SET_USER } from './actionsNames';
 
 export const setIsFetching = (statusIsFetching) => {
   return { type: SET_IS_FETCHING, isFetching: statusIsFetching };
@@ -42,6 +42,10 @@ export const setErrorWords = (errorsWords) => {
 
 export const setResults = (results) => {
   return {type: SET_IS_RESULTS, results}
+}
+
+export const setLang = (lang) => {
+  return { type: SET_IS_LANG, lang}
 }
 
 

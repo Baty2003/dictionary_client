@@ -14,6 +14,7 @@ const Testing = ({
   onFihish,
   mode,
   workOnErrorTrueAnswerFunc,
+  isRussian,
 }) => {
   const [currentNumberWord, setCurrentNumberWord] = useState(0);
   const [speedPassage] = useState(new Date());
@@ -84,9 +85,9 @@ const Testing = ({
   if (typeof words !== 'object') {
     return (
       <section style={{ textAlign: 'center' }}>
-        <h1 className="title"> Test is not configured</h1>
-        <p>Please go to the testing settings page</p>
-        <LinkPrimary text="Setting Page" href="/setting-testing" />
+        <h1 className="title"> {isRussian ? 'Тестирование не настроено' : 'Test is not configured'}</h1>
+        <p>{isRussian ? 'Пожалуйста передите на страницу настройки' : ' Please go to the testing settings page'}</p>
+        <LinkPrimary text={isRussian ? 'Страница настройки' : 'Setting Page'} href="/setting-testing" />
       </section>
     );
   }
@@ -94,54 +95,59 @@ const Testing = ({
     <section className="pages">
       <Modal
         open={showResult}
-        title="Result"
+        title={isRussian ? 'Результат' : 'Result'}
         footer={[
           <Button key="back" type="primary" onClick={() => history.push('/')}>
-            Go to the main page
+            {isRussian ? 'Перейти на главную страницу' : 'Go to the main page'}
           </Button>,
         ]}
       >
-        <h2 className="title">Your results</h2>
+        <h2 className="title">{isRussian ? 'Твои результаты' : 'Your results'}</h2>
         <div>
           <span className={testingStyle['task-text']}>
-            True Answers: <span className={testingStyle['insert']}>{trueAnswer}</span>
+            {isRussian ? 'Правильные ответы: ' : 'True Answers: '}
+            <span className={testingStyle['insert']}>{trueAnswer}</span>
           </span>
         </div>
         <div>
           <span className={testingStyle['task-text']}>
-            False Answers: <span className={testingStyle['insert']}>{falseAnswer}</span>
+            {isRussian ? 'Неправильные ответы: ' : 'False Answers: '}
+            <span className={testingStyle['insert']}>{falseAnswer}</span>
           </span>
         </div>
         <div>
           <span className={testingStyle['task-text']}>
-            Speed of passage:{' '}
-            <span className={testingStyle['insert']}>{getDifferentWithCurrentDateInSeconds(speedPassage)}</span> seconds
+            {isRussian ? 'Скорость прохождения тестирования: ' : 'Speed of passage: '}
+            <span className={testingStyle['insert']}>{getDifferentWithCurrentDateInSeconds(speedPassage)}</span>{' '}
+            {isRussian ? ' секунд' : ' seconds'}
           </span>
         </div>
       </Modal>
 
-      <h1 className="title">Testing</h1>
+      <h1 className="title">{isRussian ? 'Тестирование' : 'Testing'}</h1>
       <div>
-        <h2 className="title">Choose the true answer:</h2>
+        <h2 className="title">{isRussian ? 'Выберите правильный ответ' : 'Choose the true answer:'}</h2>
         <div className={testingStyle['container-info']}>
           {mode === 'workOnError' ? (
-            <span className={testingStyle['task-text']}>Work On Error</span>
+            <span className={testingStyle['task-text']}>{isRussian ? 'Работа над ошибками' : 'Work On Error'}</span>
           ) : (
             <span className={testingStyle['task-text']}>
-              Dictionary is <span className={testingStyle['insert']}>{dictionary.name}</span>
+              {isRussian ? 'Выбранный словарь: ' : 'Dictionary is '}
+              <span className={testingStyle['insert']}>{dictionary.name}</span>
             </span>
           )}
         </div>
         <hr />
         <div className={testingStyle['container-info']}>
           <span className={testingStyle['task-text']}>
-            <span className={testingStyle['insert']}>{words.length}</span> words out of:{' '}
             <span className={testingStyle['insert']}>{currentNumberWord + 1}</span>
+            {isRussian ? ' из: ' : ' words out of: '}
+            <span className={testingStyle['insert']}>{words.length}</span>
           </span>
         </div>
         <div className={testingStyle['container-info']}>
           <span className={testingStyle['task-text']}>
-            Word:{' '}
+            {isRussian ? 'Слово: ' : 'Word: '}
             <span className={testingStyle['insert']}>
               {lang === 'russian' ? currentWord.russian : currentWord.english}
             </span>
@@ -150,7 +156,8 @@ const Testing = ({
         {lang !== 'russian' && (
           <div className={testingStyle['container-info']}>
             <span className={testingStyle['task-text']}>
-              Transcription: <span className={testingStyle['insert']}>{currentWord.transcription}</span>
+              {isRussian ? 'Транскрипция: ' : 'Transcription: '}
+              <span className={testingStyle['insert']}>{currentWord.transcription}</span>
             </span>
           </div>
         )}
@@ -170,7 +177,7 @@ const Testing = ({
           ))}
         </div>
         <Button className={testingStyle['button-next']} type="primary" onClick={nextTesting} disabled={!disableButton}>
-          Next
+          {isRussian ? 'Дальше' : 'Next'}
         </Button>
       </div>
     </section>

@@ -7,6 +7,7 @@ import {
   SET_IS_DICTIONARIES,
   SET_IS_ERROR_WORDS,
   SET_IS_FETCHING,
+  SET_IS_LANG,
   SET_IS_RESULTS,
   SET_IS_TESTING_DATA,
   SET_IS_WORDS,
@@ -17,12 +18,15 @@ const initialStateUser = {
   name: '',
   email: '',
   token: '',
+  lang: 'en',
 };
 
 const userReducer = (state = initialStateUser, action) => {
   switch (action.type) {
     case SET_USER:
       return { ...state, name: action.name, email: action.email, token: action.token };
+    case SET_IS_LANG:
+      return { ...state, lang: action.lang };
     case EXIT:
       return initialStateUser;
     default:

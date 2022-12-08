@@ -23,7 +23,9 @@ const Table = ({
     <>
       {useLoader() && <Loader />}
       <section className={`pages ${useLoader() ? 'opacity' : ''}`}>
-        <h2 className="title title-table">{title}</h2>
+        <h2 className="title title-table" title={title}>
+          {title}
+        </h2>
 
         <div className="table__container-form">
           {withCreateItem && (

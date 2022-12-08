@@ -9,7 +9,7 @@ import { loginUserAction } from '../../redux/actions';
 import { useLoader } from '../../utils/hooks';
 import { Loader } from '../../common/Loader';
 
-const SignIn = () => {
+const SignIn = ({ isRussian }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [error, setError] = useState(false);
@@ -31,22 +31,23 @@ const SignIn = () => {
         initialValues={{ remember: true }}
         className={classNames({ hidden: useLoader() })}
       >
-        <h1 className="antd-title">SIGN IN</h1>
+        <h1 className="antd-title">{isRussian ? 'ВХОД' : 'SIGN IN'}</h1>
         {error && <p className="ant-error">{error}</p>}
-        <Form.Item label="Email" name="email" rules={validateEmail}>
+        <Form.Item label={isRussian ? 'Почта' : 'Email'} name="email" rules={validateEmail(isRussian)}>
           <Input />
         </Form.Item>
 
-        <Form.Item label="Password" name="password" rules={onlyRequired}>
+        <Form.Item label={isRussian ? 'Пароль' : 'Password'} name="password" rules={onlyRequired(isRussian)}>
           <Input.Password />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            Submit
+            {isRussian ? 'Войти' : 'Submit'}
           </Button>
         </Form.Item>
         <p className="ant-second-text">
-          Don&apos;t you have an account? <Link to="/register">Sign Up</Link>
+          {isRussian ? 'У вас нет аккаунта?' : 'Don`t you have an account?'}{' '}
+          <Link to="/register">{isRussian ? 'Зарегистрируйтесь' : 'Sign Up'}</Link>
         </p>
       </Form>
     </section>

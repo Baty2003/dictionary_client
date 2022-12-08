@@ -11,7 +11,7 @@ const TableRowErrorWord = ({ id, create, english, russian, transcription }) => {
         <td className={classTd}>{english}</td>
         <td className={classTd}>{russian}</td>
         <td className={classTd}>{transcription}</td>
-        <td>{format(new Date(create), 'MM/dd/yy')}</td>
+        <td>{format(new Date(create), 'dd/MM/yy')}</td>
       </tr>
     </>
   );

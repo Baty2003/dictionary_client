@@ -16,13 +16,13 @@ import {
 
 import './SignUp.scss';
 
-const SignUp = () => {
+const SignUp = ({ isRussian }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
   const sumbitForm = ({ name, email, password }) => {
     dispatch(registerUser(name, email, password))
-      .then((data) => {
+      .then(() => {
         setErrors(false);
         history.push('/');
       })
@@ -34,29 +34,37 @@ const SignUp = () => {
     <section className={'pages container'}>
       {useLoader() && <Loader />}
       <Form onFinish={sumbitForm} initialValues={{ remember: true }} className={classNames({ hidden: useLoader() })}>
-        <h1 className="antd-title">SIGN UP</h1>
+        <h1 className="antd-title">{isRussian ? 'Регистрация' : 'SIGN UP'}</h1>
         {errors?.name && <p className="ant-error">{errors.name[0]}</p>}
-        <Form.Item label="Username" name="name" rules={onlyRequired}>
+        <Form.Item label={isRussian ? 'Имя' : 'Username'} name="name" rules={onlyRequired(isRussian)}>
           <Input />
         </Form.Item>
 
         {errors?.email && <p className="ant-error">{errors.email[0]}</p>}
-        <Form.Item label="Email" name="email" rules={validateEmail}>
+        <Form.Item label={isRussian ? 'Почта' : 'Email'} name="email" rules={validateEmail(isRussian)}>
           <Input />
         </Form.Item>
 
         {errors?.password && <p className="ant-error">{errors.password[0]}</p>}
-        <Form.Item label="Password" name="password" rules={validatePasswordRegister}>
+        <Form.Item
+          label={isRussian ? 'Пароль' : 'Password'}
+          name="password"
+          rules={validatePasswordRegister(isRussian)}
+        >
           <Input.Password />
         </Form.Item>
 
-        <Form.Item label="Repeat Password" name="_" rules={[...onlyRequired, validateRepeatPassword]}>
+        <Form.Item
+          label={isRussian ? 'Повторите пароль' : 'Repeat Password'}
+          name="_"
+          rules={[...onlyRequired(isRussian), validateRepeatPassword(isRussian)]}
+        >
           <Input.Password />
         </Form.Item>
 
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            Submit
+            {isRussian ? 'Регистрация' : 'Submit'}
           </Button>
         </Form.Item>
         <p className="ant-second-text">

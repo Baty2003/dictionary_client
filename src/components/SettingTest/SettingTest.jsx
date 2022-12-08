@@ -8,7 +8,7 @@ import { useLoader } from '../../utils/hooks';
 
 import settingTestStyle from './SettingTest.module.scss';
 
-const SettingTest = ({ items = [], workOnError, saveSettingFunc }) => {
+const SettingTest = ({ items = [], workOnError, saveSettingFunc, isRussian }) => {
   const [countWords, setCountWords] = useState(4);
   const [selectedCountWord, setSelectedCountWord] = useState(4);
   const setDictionary = (id) => {
@@ -26,29 +26,38 @@ const SettingTest = ({ items = [], workOnError, saveSettingFunc }) => {
       <section className={`pages ${useLoader() ? 'opacity' : ''}`}>
         {useLoader() && <Loader />}
         <Form onFinish={submitForm} name="login" initialValues={{ countVariants: countWords, countWords: countWords }}>
-          <h1 className="title">Setting Testing</h1>
-          {workOnError && <h2 className="title">Work on Error</h2>}
+          <h1 className="title">{isRussian ? 'Настройка тестирование' : 'Setting Testing'}</h1>
+          {workOnError && <h2 className="title">{isRussian ? 'Работа над ошибками' : 'Work on Error'}</h2>}
           {!workOnError && (
             <Form.Item
               name="id"
-              label="Select Dictionary"
+              label={isRussian ? 'Список словарей' : 'Select Dictionary'}
               hasFeedback
               rules={[
-                { required: true, message: 'Please select Dictionary!' },
+                { required: true, message: isRussian ? 'Пожалуйста выберите словарь' : 'Please select Dictionary!' },
                 () => ({
                   validator() {
                     if (countWords >= 4) {
                       return Promise.resolve();
                     }
-                    return Promise.reject(new Error('The dictionary must contain more than 4 words'));
+                    return Promise.reject(
+                      new Error(
+                        isRussian
+                          ? 'Словарь должен содержать не менее 4-х слов'
+                          : 'The dictionary must contain more than 4 words',
+                      ),
+                    );
                   },
                 }),
               ]}
             >
-              <Select placeholder="Please select a country" onChange={setDictionary}>
+              <Select
+                placeholder={isRussian ? 'Пожалуйста выберите словарь' : 'Please select a country'}
+                onChange={setDictionary}
+              >
                 {items.map((item) => (
                   <Option value={item.id} key={item.id}>
-                    {item.name} {`(Count Words: ${item.count})`}
+                    {item.name} {isRussian ? `(Кол-во слов: ${item.count})` : `(Count Words: ${item.count})`}
                   </Option>
                 ))}
               </Select>
@@ -56,12 +65,16 @@ const SettingTest = ({ items = [], workOnError, saveSettingFunc }) => {
           )}
           <Form.Item
             name="countVariants"
-            label="Count Variants"
+            label={isRussian ? 'Кол-во вариантов' : 'Count Variants'}
             rules={[
               () => ({
                 validator(_, value) {
                   if (value <= selectedCountWord) return Promise.resolve();
-                  return Promise.reject('There can be no more options than the number of words');
+                  return Promise.reject(
+                    isRussian
+                      ? 'Кол-во вариантов не может быть больше кол-во самих слов'
+                      : 'There can be no more options than the number of words',
+                  );
                 },
               }),
             ]}
@@ -76,7 +89,7 @@ const SettingTest = ({ items = [], workOnError, saveSettingFunc }) => {
               }}
             />
           </Form.Item>
-          <Form.Item name="countWords" label="Count Words">
+          <Form.Item name="countWords" label={isRussian ? 'Количество слов' : 'Count Words'}>
             <Slider
               onChange={(data) => setSelectedCountWord(data)}
               min={4}
@@ -86,15 +99,15 @@ const SettingTest = ({ items = [], workOnError, saveSettingFunc }) => {
               }}
             />
           </Form.Item>
-          <Form.Item label="Language" name="lang" initialValue="english">
+          <Form.Item label={isRussian ? 'Язык' : 'Language'} name="lang" initialValue="english">
             <Radio.Group buttonStyle="solid">
               <Radio.Button value="english">English</Radio.Button>
-              <Radio.Button value="russian">Russian</Radio.Button>
+              <Radio.Button value="russian">{isRussian ? 'Русский' : 'Russian'}</Radio.Button>
             </Radio.Group>
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Start testing
+              {isRussian ? 'Начать тестирование' : 'Start testing'}
             </Button>
           </Form.Item>
         </Form>

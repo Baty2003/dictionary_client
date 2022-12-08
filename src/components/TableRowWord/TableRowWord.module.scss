@@ -18,18 +18,24 @@
 
 .buttons-label {
 	display: flex;
-	flex-direction: column;
+	margin-left: 4px;
+
+	@media (max-width: 770px) {
+		flex-direction: column;
+	}
 }
 
-.submit-button{
+.submit-button {
 	padding: 2px;
-	font-size: 14px;
+	font-family: 'Yanone Kaffeesatz', sans-serif;
+	margin-right: 4px;
 }
 
 .form {
 	display: grid;
 	padding: 4px 0;
-	grid-template-columns: 31.8% 33% 25% 1fr 1fr;
+	grid-template-columns: 30% 30% 22% 1fr;
+
 }
 
 .input {

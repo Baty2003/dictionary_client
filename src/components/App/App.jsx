@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import 'antd/dist/antd.css';
@@ -35,6 +35,7 @@ const App = () => {
   const errorsWords = useSelector((state) => state.data.errorsWords);
   const testingData = useSelector((state) => state.data.testing);
   const results = useSelector((state) => state.data.results)
+  const isRussian = useSelector(state => state.user.lang === 'ru');
   const history = useHistory();
   const dispatch = useDispatch();
   const token = getCookie('token');
@@ -69,8 +70,6 @@ const App = () => {
 
   useEffect(() => {
     if (token) {
-      console.log('lol');
-
       dispatch(getDataUser(token));
     }
   }, []);
@@ -91,11 +90,11 @@ const App = () => {
         {useLoader() && <Loader />}
         <Route path="/" exact render={() => {
           if (!loggin)
-            return <GuestPage />
+            return <GuestPage isRussian={isRussian}/>
           else
-            return <Table namesTitlesCells={columnsDictionariesForTable}
+            return <Table namesTitlesCells={columnsDictionariesForTable(isRussian)}
               items={dictionaries}
-              title="Dictiories"
+              title={isRussian ? 'Словари' : 'Dictiories'}
               ComponentTr={TableRowDictionary}
               type="dictionary"
               addItem={(name) => dispatch(createAndUpdateDictionaries(name, token))}
@@ -103,40 +102,40 @@ const App = () => {
               deleteItem={(id) => dispatch(deleteAndUpdateDictionaries(id, token))} withCreateItem />
         }} />
 
-        <Route path="/login" component={SignIn} />
-        <Route path="/register" component={SignUp} />
+        <Route path="/login" render={() => <SignIn isRussian={isRussian}/>} />
+        <Route path="/register" render={() => <SignUp isRussian={isRussian}/>} />
 
         <Route path="/dictionary/:id" render={() => {
           return <AxiosInterceptor><GetWord /></AxiosInterceptor>;
         }} />
         <Route path="/error-words" >
           <AxiosInterceptor>
-            <Table items={errorsWords} ComponentTr={TableRowErrorWord} title="Words with error" namesTitlesCells={columnsErrorWordsForTable}>
-              <LinkPrimary text="Work on error" small primary disabled={errorsWords.length < 4 || false} href="/setting-testing-error" />
+            <Table items={errorsWords} ComponentTr={TableRowErrorWord} title={isRussian ? 'Работа над ошибками' : 'Words with error'} namesTitlesCells={columnsErrorWordsForTable(isRussian)}>
+              <LinkPrimary text={isRussian ? 'Работа над ошибками' : 'Work on error'} small primary disabled={errorsWords.length < 4 || false} href="/setting-testing-error" />
             </Table>
           </AxiosInterceptor>
         </Route>
         <Route path="/setting-testing" render={() => {
           return <AxiosInterceptor>
-            <SettingTest items={dictionaries} saveSettingFunc={saveTestingSetting} />
+            <SettingTest items={dictionaries} saveSettingFunc={saveTestingSetting} isRussian={isRussian} />
           </AxiosInterceptor>;
         }} />
         <Route path="/setting-testing-error" render={() => {
           return <AxiosInterceptor>
-            <SettingTest items={errorsWords} saveSettingFunc={saveTestingSettingWithErrorsWords} workOnError />
+            <SettingTest items={errorsWords} saveSettingFunc={saveTestingSettingWithErrorsWords} isRussian={isRussian} workOnError />
           </AxiosInterceptor>;
         }} />
         <Route path="/testing-error" render={() => {
           return <AxiosInterceptor>
-            <Testing items={testingData} onFihish={handleResult} workOnErrorTrueAnswerFunc={deleteErrorWordFunc} mode="workOnError" />
+            <Testing items={testingData} onFihish={handleResult} workOnErrorTrueAnswerFunc={deleteErrorWordFunc} isRussian={isRussian} mode="workOnError" />
           </AxiosInterceptor>
         }} />
         <Route path="/testing" render={() => {
-          return <AxiosInterceptor><Testing items={testingData} onFihish={handleResult} wrongAnswerFunc={addErrorWordFunc} /></AxiosInterceptor>;
+          return <AxiosInterceptor><Testing items={testingData} onFihish={handleResult} isRussian={isRussian} wrongAnswerFunc={addErrorWordFunc} /></AxiosInterceptor>;
         }} />
         <Route path="/results" render={() => {
           return <AxiosInterceptor>
-            <Table namesTitlesCells={columnsResultForTable} ComponentTr={TableRowResults} items={results} />
+            <Table title={isRussian ? 'История тестирования' : 'History Results'} namesTitlesCells={columnsResultForTable(isRussian)} ComponentTr={TableRowResults} items={results} />
           </AxiosInterceptor>;
         }} />
       </main>

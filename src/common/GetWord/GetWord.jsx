@@ -11,6 +11,7 @@ const GetWord = () => {
   const dispatch = useDispatch();
   const { id: idDict } = useParams();
   const token = useSelector((state) => state.user.token);
+  const isRussian = useSelector((state) => state.user.lang === 'ru');
   const items = useSelector((state) => state.data.words);
   const dictionaryName = useSelector((state) => state.data?.dictionaries).find((item) => item.id === +idDict)?.name;
 
@@ -21,8 +22,8 @@ const GetWord = () => {
   return (
     <Table
       items={items}
-      title={`Dictionary is ${dictionaryName || ''}`}
-      namesTitlesCells={columnsWordsForTable}
+      title={`${isRussian ? 'Словарь: ' : 'Dictionary is'} ${dictionaryName || ''}`}
+      namesTitlesCells={columnsWordsForTable(isRussian)}
       ComponentTr={TableRowWord}
       type="word"
       editItem={(id, english, russian, transcription) =>

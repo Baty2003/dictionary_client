@@ -64,7 +64,7 @@ const TableRowWord = ({ id, create, english, russian, transcription, editItem, d
           if (event.key === 'Escape') setEdit(false);
         }}
       >
-        <td colSpan={4} className={tableRowStyle['name-dictionary']}>
+        <td colSpan={5} className={tableRowStyle['name-dictionary']}>
           <form className={tableRowStyle['form']} onSubmit={handleSubmit(submitFunc)}>
             <label htmlFor="name" className={tableRowStyle['label']}>
               <input
@@ -112,7 +112,6 @@ const TableRowWord = ({ id, create, english, russian, transcription, editItem, d
             </label>
           </form>
         </td>
-        <td></td>
       </tr>
     );
   }
@@ -122,7 +121,7 @@ const TableRowWord = ({ id, create, english, russian, transcription, editItem, d
         <td className={classTd}>{english}</td>
         <td className={classTd}>{russian}</td>
         <td className={classTd}>{transcription}</td>
-        <td>{format(new Date(create), 'MM/dd/yy')}</td>
+        <td>{format(new Date(create), 'dd/MM/yy')}</td>
         <td>
           {
             <Popconfirm onConfirm={() => deleteItem(id)} title={'Delete this item?'} className={tableRowStyle['pop']}>

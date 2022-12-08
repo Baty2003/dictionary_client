@@ -1,5 +1,6 @@
 @import '../../colors.scss';
 
+
 .name-dictionary a {
 	font-family: "Zen Dots", cursive;
 	font-size: 16px;
@@ -10,14 +11,19 @@
 	color: $accent-color;
 }
 
+.label {
+	flex-grow: 4;
+}
 
-.form{
+.form {
+	display: flex;
 	padding: 4px;
 }
 
 .input {
 	border: 1px solid $accent-color;
 	outline: none;
+	padding: 2px;
 	transition: 0.3s;
 	font-size: 18px;
 	display: block;
