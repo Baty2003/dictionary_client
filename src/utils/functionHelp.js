@@ -61,3 +61,12 @@ export const shuffleArray = (array) => {
 export const getDifferentWithCurrentDateInSeconds = (date) => {
   return differenceInSeconds(new Date(), date);
 };
+
+export const sortItemsByCreate = (items = []) => {
+  const newArr = [...items];
+  newArr.sort((a, b) => {
+    return new Date(b.create) - new Date(a.create);
+  });
+
+  return newArr;
+};

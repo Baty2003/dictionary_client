@@ -4,7 +4,7 @@ import { Button, Popconfirm } from 'antd';
 import { useForm } from 'react-hook-form';
 
 import { useDoubleTouch } from '../../utils/hooks.js';
-import { validateWordsFieldHook } from '../../utils/validateRules.js';
+import { validateEnglishWord, validateRussianWord, validateWordsFieldHook } from '../../utils/validateRules.js';
 import { getTranscriptionByEnglishWord, parseErrorForHookForms } from '../../utils/functionHelp.js';
 
 import tableRowStyle from './TableRowWord.module.scss';
@@ -71,7 +71,7 @@ const TableRowWord = ({ id, create, english, russian, transcription, editItem, d
                 type="text"
                 name="english"
                 className={tableRowStyle['input']}
-                {...register('english', { ...validateWordsFieldHook, value: english })}
+                {...register('english', { ...validateWordsFieldHook, ...validateEnglishWord, value: english })}
               />
               {errors.english && <span>{errors?.english?.message || 'Error'}</span>}
               {errors.general && <span>{errors?.general?.message || 'Error general'}</span>}
@@ -81,7 +81,7 @@ const TableRowWord = ({ id, create, english, russian, transcription, editItem, d
                 type="text"
                 name="russian"
                 className={tableRowStyle['input']}
-                {...register('russian', { ...validateWordsFieldHook, value: russian })}
+                {...register('russian', { ...validateWordsFieldHook, ...validateRussianWord, value: russian })}
               />
               {errors.russian && <span>{errors?.russian?.message || 'Error'}</span>}
               {errors.general && <span>{errors?.general?.message || 'Error general'}</span>}

@@ -1,7 +1,8 @@
 import { tr } from 'date-fns/locale';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Loader } from '../../common/Loader';
+import { sortItemsByCreate } from '../../utils/functionHelp';
 import { useLoader } from '../../utils/hooks';
 import CreateForm from '../CreateForm/CreateForm';
 import './Table.scss';
@@ -18,7 +19,12 @@ const Table = ({
   withCreateItem,
   children,
 }) => {
+  const [itemsSort, setItemsSort] = useState([...items]);
   const [showForm, setShowForm] = useState(false);
+  useEffect(() => {
+    setItemsSort([...items]);
+  }, [items]);
+
   return (
     <>
       {useLoader() && <Loader />}
@@ -44,7 +50,11 @@ const Table = ({
           <tbody>
             <tr>
               {namesTitlesCells.map((cell) => (
-                <th key={cell.name} width={cell?.width && cell.width}>
+                <th
+                  key={cell.name}
+                  width={cell?.width && cell.width}
+                  onClick={() => setItemsSort(sortItemsByCreate(itemsSort))}
+                >
                   {cell.name}
                 </th>
               ))}
@@ -54,8 +64,8 @@ const Table = ({
                 <td key={cell.name} width={cell?.width && cell.width}></td>
               ))}
             </tr>
-            {items.length ? (
-              items.map((item, index) => (
+            {itemsSort.length ? (
+              itemsSort.map((item, index) => (
                 <ComponentTr key={index} {...item} editItem={editItem} deleteItem={deleteItem} />
               ))
             ) : (

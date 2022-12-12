@@ -38,6 +38,17 @@ export const validateRepeatPassword =
       },
     });
 
+export const validateEnglishWord = {
+  // eslint-disable-next-line no-useless-escape
+  pattern: { value: /^[~`!@#$%^&*()_+=[\]\\{}|;':",.\/<>?a-zA-Z0-9-]+$/, message: 'Only english symbols' },
+};
+
+export const validateRussianWord = {
+  // eslint-disable-next-line no-useless-escape 
+  pattern: { value: /^[?!,.а-яА-ЯёЁ0-9\s]+$/, message: 'Only russian symbols' },
+};
+
+
 export const validateNameHook = {
   required: 'Field is required',
   maxLength: { value: 20, message: 'Max name length is 20 symbol' },
