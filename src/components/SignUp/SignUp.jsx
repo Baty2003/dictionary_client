@@ -14,7 +14,7 @@ import {
   validateRepeatPassword,
 } from '../../utils/validateRules';
 
-import './SignUp.scss';
+import signUpStyle from './SignUp.module.scss';
 
 const SignUp = ({ isRussian }) => {
   const dispatch = useDispatch();
@@ -36,18 +36,29 @@ const SignUp = ({ isRussian }) => {
       <Form onFinish={sumbitForm} initialValues={{ remember: true }} className={classNames({ hidden: useLoader() })}>
         <h1 className="antd-title">{isRussian ? 'Регистрация' : 'SIGN UP'}</h1>
         {errors?.name && <p className="ant-error">{errors.name[0]}</p>}
-        <Form.Item label={isRussian ? 'Имя' : 'Username'} name="name" rules={onlyRequired(isRussian)}>
+        <Form.Item
+          label={isRussian ? 'Имя' : 'Username'}
+          name="name"
+          className={signUpStyle['flex-column']}
+          rules={onlyRequired(isRussian)}
+        >
           <Input />
         </Form.Item>
 
         {errors?.email && <p className="ant-error">{errors.email[0]}</p>}
-        <Form.Item label={isRussian ? 'Почта' : 'Email'} name="email" rules={validateEmail(isRussian)}>
+        <Form.Item
+          label={isRussian ? 'Почта' : 'Email'}
+          name="email"
+          className={signUpStyle['flex-column']}
+          rules={validateEmail(isRussian)}
+        >
           <Input />
         </Form.Item>
 
         {errors?.password && <p className="ant-error">{errors.password[0]}</p>}
         <Form.Item
           label={isRussian ? 'Пароль' : 'Password'}
+          className={signUpStyle['flex-column']}
           name="password"
           rules={validatePasswordRegister(isRussian)}
         >
@@ -56,6 +67,7 @@ const SignUp = ({ isRussian }) => {
 
         <Form.Item
           label={isRussian ? 'Повторите пароль' : 'Repeat Password'}
+          className={signUpStyle['flex-column']}
           name="_"
           rules={[...onlyRequired(isRussian), validateRepeatPassword(isRussian)]}
         >
@@ -68,7 +80,8 @@ const SignUp = ({ isRussian }) => {
           </Button>
         </Form.Item>
         <p className="ant-second-text">
-          Do you already have an account? <Link to="/login">Sign In</Link>
+          {isRussian ? 'У вас уже есть аккаунт? ' : 'Do you already have an account? '}
+          <Link to="/login">{isRussian ? 'Вход' : 'Sign In'}</Link>
         </p>
       </Form>
     </section>

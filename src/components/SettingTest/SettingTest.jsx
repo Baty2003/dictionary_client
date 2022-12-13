@@ -51,7 +51,7 @@ const SettingTest = ({ items = [], workOnError, saveSettingFunc, isRussian }) =>
               ]}
             >
               <Select
-                placeholder={isRussian ? 'Пожалуйста выберите словарь' : 'Please select a country'}
+                placeholder={isRussian ? 'Пожалуйста выберите словарь' : 'Please select a dictionary'}
                 onChange={setDictionary}
               >
                 {items.map((item) => (

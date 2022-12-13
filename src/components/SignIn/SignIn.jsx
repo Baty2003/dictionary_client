@@ -9,6 +9,8 @@ import { loginUserAction } from '../../redux/actions';
 import { useLoader } from '../../utils/hooks';
 import { Loader } from '../../common/Loader';
 
+import signInStyle from './SignIn.module.scss';
+
 const SignIn = ({ isRussian }) => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -32,11 +34,21 @@ const SignIn = ({ isRussian }) => {
       >
         <h1 className="antd-title">{isRussian ? 'ВХОД' : 'SIGN IN'}</h1>
         {error && <p className="ant-error">{error}</p>}
-        <Form.Item label={isRussian ? 'Почта' : 'Email'} name="email" rules={validateEmail(isRussian)}>
+        <Form.Item
+          label={isRussian ? 'Почта' : 'Email'}
+          className={signInStyle['flex-column']}
+          name="email"
+          rules={validateEmail(isRussian)}
+        >
           <Input />
         </Form.Item>
 
-        <Form.Item label={isRussian ? 'Пароль' : 'Password'} name="password" rules={onlyRequired(isRussian)}>
+        <Form.Item
+          label={isRussian ? 'Пароль' : 'Password'}
+          className={signInStyle['flex-column']}
+          name="password"
+          rules={onlyRequired(isRussian)}
+        >
           <Input.Password />
         </Form.Item>
         <Form.Item>
