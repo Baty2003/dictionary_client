@@ -12,6 +12,8 @@ import {
   onlyRequired,
   validatePasswordRegister,
   validateRepeatPassword,
+  validateUsernameRegister,
+  validateNameHook,
 } from '../../utils/validateRules';
 
 import signUpStyle from './SignUp.module.scss';
@@ -40,7 +42,7 @@ const SignUp = ({ isRussian }) => {
           label={isRussian ? 'Имя' : 'Username'}
           name="name"
           className={signUpStyle['flex-column']}
-          rules={onlyRequired(isRussian)}
+          rules={validateUsernameRegister(isRussian)}
         >
           <Input />
         </Form.Item>
