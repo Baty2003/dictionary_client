@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
@@ -24,6 +24,24 @@ export const useDoubleTouch = (func) => {
   return doubleTouchDetect;
 };
 
-export const useValidate = (item, validateRule) => {
-  const [error, setError] = useState(false);
+export const useSortableData = (items, config = null) => {
+  const [sortConfig, setSortConfig] = useState(config);
+
+  const sortedItems = useMemo(() => {
+    let sortableItems = [...items];
+    if (sortConfig !== null && sortConfig.sortFunction) {
+      sortConfig.sortFunction(sortableItems, sortConfig.reverse);
+    }
+    return sortableItems;
+  }, [items, sortConfig]);
+
+  const requestSort = (key, sortFunction) => {
+    let reverse = false;
+    if (sortConfig && sortConfig.key === key && !sortConfig.reverse) {
+      reverse = true;
+    }
+    setSortConfig({ key, reverse, sortFunction });
+  };
+
+  return { items: sortedItems, requestSort };
 };

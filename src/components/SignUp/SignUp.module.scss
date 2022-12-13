@@ -1,0 +1,7 @@
+.flex-column>div {
+	flex-direction: column;
+}
+
+.flex-column>div>div:first-child {
+	align-self: flex-start;
+}

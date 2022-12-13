@@ -62,11 +62,24 @@ export const getDifferentWithCurrentDateInSeconds = (date) => {
   return differenceInSeconds(new Date(), date);
 };
 
-export const sortItemsByCreate = (items = []) => {
-  const newArr = [...items];
-  newArr.sort((a, b) => {
-    return new Date(b.create) - new Date(a.create);
+export const sortItemsByString = (items = [], nameField, reverse) => {
+  items.sort((a, b) => {
+    if (a[nameField] < b[nameField]) {
+      return reverse ? -1 : 1;
+    }
+    if (a[nameField] > b[nameField]) {
+      return reverse ? 1 : -1;
+    }
   });
+};
 
-  return newArr;
+export const sortItemsByInt = (items = [], nameField, reverse) => {
+  items.sort((a, b) => {
+    if (+a[nameField] < +b[nameField]) {
+      return reverse ? -1 : 1;
+    }
+    if (+a[nameField] > +b[nameField]) {
+      return reverse ? 1 : -1;
+    }
+  });
 };

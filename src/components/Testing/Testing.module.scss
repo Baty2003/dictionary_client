@@ -32,7 +32,7 @@
 }
 
 .button-answer-false {
-	background-color: red;
+	background-color: rgb(192, 60, 60);
 	color: white;
 
 	&:hover,
@@ -40,13 +40,13 @@
 	&:focus,
 	&:disabled,
 	&:disabled:hover {
-		background-color: red;
+		background-color: rgb(192, 60, 60);
 		color: white;
 	}
 }
 
 .button-answer-true {
-	background-color: rgb(0, 255, 64);
+	background-color: rgb(34, 175, 69);
 	color: white;
 
 	&:hover,
@@ -54,7 +54,7 @@
 	&:focus,
 	&:disabled,
 	&:disabled:hover {
-		background-color: rgb(0, 255, 64);
+		background-color: rgb(34, 175, 69);
 		color: white;
 	}
 }

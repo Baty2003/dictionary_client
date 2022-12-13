@@ -30,8 +30,6 @@ const CreateForm = ({ submitFunc, type, hideFunc, showFunc, show }) => {
         hideFunc();
       })
       .catch((error) => {
-        console.log(error);
-
         error.errors
           ? parseErrorForHookForms(error.errors, setError)
           : setError('general', { type: 'general', message: error?.message });

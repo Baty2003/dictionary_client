@@ -53,11 +53,11 @@ const App = () => {
       return Promise.reject('Words is not enough');
     }
   }
-  const saveTestingSettingWithErrorsWords = async (countVariants, countWords) => {
+  const saveTestingSettingWithErrorsWords = async (countVariants, countWords, lang) => {
     await dispatch(getDictionariesAndErrorWords(token));
     if (errorsWords.length >= countWords) {
       const wordsForTesting = shuffleArray(errorsWords).slice(-countWords);
-      dispatch(setTestingData({}, wordsForTesting, countVariants));
+      dispatch(setTestingData({}, wordsForTesting, countVariants, lang));
       history.push('/testing-error')
       return Promise.resolve();
     } else {
