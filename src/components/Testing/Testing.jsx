@@ -9,7 +9,7 @@ import { LinkPrimary } from '../LinkPrimary';
 import testingStyle from './Testing.module.scss';
 
 const Testing = ({
-  items: { dictionary, words, countVariants = 5, lang },
+  items: { dictionary, words, countVariants = 4, lang },
   wrongAnswerFunc,
   onFihish,
   mode,

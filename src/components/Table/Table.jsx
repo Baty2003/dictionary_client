@@ -1,9 +1,7 @@
-import { tr } from 'date-fns/locale';
 import React, { useState, useEffect } from 'react';
 
 import { Loader } from '../../common/Loader';
-import { sortItemsByCreate } from '../../utils/functionHelp';
-import { useLoader } from '../../utils/hooks';
+import { useLoader, useSortableData } from '../../utils/hooks';
 import CreateForm from '../CreateForm/CreateForm';
 import './Table.scss';
 
@@ -19,12 +17,9 @@ const Table = ({
   withCreateItem,
   children,
 }) => {
-  const [itemsSort, setItemsSort] = useState([...items]);
-  const [showForm, setShowForm] = useState(false);
-  useEffect(() => {
-    setItemsSort([...items]);
-  }, [items]);
+  const { items: itemsSort, requestSort } = useSortableData(items);
 
+  const [showForm, setShowForm] = useState(false);
   return (
     <>
       {useLoader() && <Loader />}
@@ -53,7 +48,7 @@ const Table = ({
                 <th
                   key={cell.name}
                   width={cell?.width && cell.width}
-                  onClick={() => setItemsSort(sortItemsByCreate(itemsSort))}
+                  onClick={() => requestSort(cell.name, cell?.sortFunction)}
                 >
                   {cell.name}
                 </th>

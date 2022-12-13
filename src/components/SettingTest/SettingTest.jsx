@@ -11,16 +11,19 @@ const SettingTest = ({ items = [], workOnError, saveSettingFunc, isRussian }) =>
     setCountWords(items.find((item) => item.id === id).count || 8);
   };
   const countWordsExpression = countWords < 4 ? 4 : countWords;
+
   const submitForm = ({ id, countVariants, countWords, lang }) => {
-    saveSettingFunc(id, countVariants, countWords, lang);
+    if (!workOnError) saveSettingFunc(id, countVariants, countWords, lang);
+    else saveSettingFunc(countVariants, countWords, lang);
   };
   const { Option } = Select;
+  const statusLoader = useLoader();
   if (!items.length) return <h1 className="title">Words is not enough</h1>;
   return (
     <>
-      {useLoader() && <Loader />}
-      <section className={`pages ${useLoader() ? 'opacity' : ''}`}>
-        {useLoader() && <Loader />}
+      {statusLoader && <Loader />}
+      <section className={`pages ${statusLoader ? 'opacity' : ''}`}>
+        {statusLoader && <Loader />}
         <Form onFinish={submitForm} name="login" initialValues={{ countVariants: countWords, countWords: countWords }}>
           <h1 className="title">{isRussian ? 'Настройка тестирование' : 'Setting Testing'}</h1>
           {workOnError && <h2 className="title">{isRussian ? 'Работа над ошибками' : 'Work on Error'}</h2>}
