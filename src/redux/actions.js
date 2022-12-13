@@ -84,9 +84,9 @@ export const registerUser = (name, email, password) => async (dispatch) => {
   try {
     const response = await registerUserApi(name, email, password);
     const { token } = response;
-
     dispatch(getDataUser(token));
     dispatch(setIsFetching(false));
+    setCookie('token', token);
     return response;
   } catch (err) {
     dispatch(setIsFetching(false));
@@ -117,7 +117,6 @@ export const getDictionariesAndErrorWords = (token) => async (dispatch) => {
     dispatch(setIsFetching(false));
     return response;
   } catch (err) {
-    console.log(err);
     dispatch(setIsFetching(false));
     return Promise.reject(err);
   }
@@ -162,7 +161,6 @@ export const getWords = (id, token) => async (dispatch) => {
     dispatch(setIsFetching(false));
     return response;
   } catch (err) {
-    console.log(err);
     dispatch(setIsFetching(false));
     return Promise.reject(err);
   }
